@@ -27,17 +27,17 @@ let component f = Component f
 let build_pipeline_stages =
   let rec loop : type a b. (a, b) t -> a -> Pipeline_stage.t list * b =
     fun (type a b) (t : (a, b) t) (source : a) ->
-      match t with
-      | Id -> [], (source : b)
-      | Compose (left, right) ->
-        let left_stages, data_from_left = loop left source in
-        let right_stages, data_from_right = loop right data_from_left in
-        left_stages @ right_stages, data_from_right
-      | Component f ->
-        let ack_dn = Signal.wire 1 in
-        let output = f { data = source; ack = ack_dn } in
-        let this_stage = { Pipeline_stage.ack_up = output.ack; ack_dn } in
-        [ this_stage ], output.data
+    match t with
+    | Id -> [], (source : b)
+    | Compose (left, right) ->
+      let left_stages, data_from_left = loop left source in
+      let right_stages, data_from_right = loop right data_from_left in
+      left_stages @ right_stages, data_from_right
+    | Component f ->
+      let ack_dn = Signal.wire 1 in
+      let output = f { data = source; ack = ack_dn } in
+      let this_stage = { Pipeline_stage.ack_up = output.ack; ack_dn } in
+      [ this_stage ], output.data
   in
   loop
 ;;
