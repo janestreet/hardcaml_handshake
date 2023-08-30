@@ -32,4 +32,3 @@ val ( >>> ) : ('a, 'b) t -> ('b, 'c) t -> ('a, 'c) t
     List of components can be empty, of which no handshake pipelining will be done.
 *)
 val run : ('a, 'b) t -> 'a IO.t -> 'b IO.t
-
