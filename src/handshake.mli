@@ -28,6 +28,9 @@ val arr : ('a -> 'b) -> ('a, 'b) t
 (** [>>> a b] composes two handshake components together. *)
 val ( >>> ) : ('a, 'b) t -> ('b, 'c) t -> ('a, 'c) t
 
+(** x[0] >>> x[1] >>> x[2] .... >>> x[n-1] *)
+val of_list : ('a, 'a) t list -> ('a, 'a) t
+
 (** Creates a chained handshake component comprising of an arbitrary number of components.
     List of components can be empty, of which no handshake pipelining will be done.
 *)
