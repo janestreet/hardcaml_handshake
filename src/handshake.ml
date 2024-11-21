@@ -22,6 +22,7 @@ type ('a, 'b) t =
 
 let id = Id
 let ( >>> ) a b = Compose (a, b)
+let of_list items = List.fold items ~init:id ~f:(fun acc x -> acc >>> x)
 let component f = Component f
 
 let build_pipeline_stages =
