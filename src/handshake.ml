@@ -49,7 +49,7 @@ let run (components : _ t) (io : _ IO.t) =
   let pipeline_stages, data_dn = build_pipeline_stages components io.data in
   let ack_up =
     List.fold_right pipeline_stages ~init:io.ack ~f:(fun pipeline_stage ack ->
-      Signal.( <== ) pipeline_stage.ack_dn ack;
+      Signal.( <-- ) pipeline_stage.ack_dn ack;
       pipeline_stage.ack_up)
   in
   { IO.data = data_dn; ack = ack_up }
